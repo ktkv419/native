@@ -4,9 +4,16 @@ import Todo from "./shared/todo/todo.ui"
 
 function App() {
   const [todos, setTodos] = useState<ITodo[]>([])
+  const [todoTitle, setTodoTitle] = useState("")
 
-  const handleAdd = (e) => {
-
+  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const newTodo: ITodo = {
+      title: todoTitle,
+      id: todos.length,
+      status: false
+    }
+    setTodos([...todos, newTodo])
   }
 
   const setStatus = (id: number) => {
@@ -17,6 +24,11 @@ function App() {
 
   }
 
+  const calcAmountOfDoneTodos = (todos: ITodo[]) => {
+    return todos.filter((todo) =>
+      todo.status === true).length
+  }
+  
   return (
     <div className="container">
       <div className="header">
@@ -25,8 +37,14 @@ function App() {
       </div>
 
       <div className="add-todo">
-        <form className="input-container">
-          <input type="text" className="todo-input" placeholder="Добавить новую задачу..." id="todoInput" />
+        <form onSubmit={handleAdd} className="input-container">
+          <input
+            value={todoTitle}
+            onChange={(e) => setTodoTitle(e.target.value)}
+            name="todoInput" type="text"
+            className="todo-input"
+            placeholder="Добавить новую задачу..." id="todoInput"
+          />
           <button className="add-btn" id="addBtn">Добавить</button>
         </form>
       </div>
