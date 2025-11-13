@@ -24,11 +24,6 @@ function App() {
 
   }
 
-  const calcAmountOfDoneTodos = (todos: ITodo[]) => {
-    return todos.filter((todo) =>
-      todo.status === true).length
-  }
-  
   return (
     <div className="container">
       <div className="header">
